@@ -3,7 +3,7 @@
 _log=$(docker logs --tail 1 naughty_poincare)
 echo "["`date "+%F %T"`"]" $_log | tee -a pawns_check.log
 
-if [[ $_log == *"not_running"*  ||  $_log == *"starting"* ]]; then
+if [[ $_log == *"could_not_mark_peer_alive"* || $_log == *"not_running"*  ||  $_log == *"starting"* ]]; then
   echo "["`date "+%F %T"`"]" "Pawns is disconnected. Try to reconnect it." | tee -a pawns_check.log
   _connectCMD=$(synowebapi --exec api=SYNO.Docker.Container version=1 method=stop name="naughty_poincare" && sleep 5 && docker container start naughty_poincare)
   echo "["`date "+%F %T"`"]" $_connectCMD | tee -a pawns_check.log
